@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const passwordHash = require("password-hash");
+const bcrypt = require("bcryptjs");
 const pool = require("../connection");
 
 console.log("inside post login request");
@@ -16,9 +16,13 @@ router.post("/", (req, res) => {
       res.send("Database Error");
     }
 
-    if (result && result.length > 0) {
-      //if (passwordHash.verify(admin, result[0][0].password)) {
-      if (result[0][0].password == "admin") {
+    if (result && result.length > 0 && result[0][0].status) {
+      let isMatch = bcrypt.compareSync(
+        req.body.password,
+        result[0][0].password
+      );
+
+      if (isMatch) {
         res.cookie("cookie", "admin", {
           maxAge: 90000000,
           httpOnly: false,
@@ -29,9 +33,6 @@ router.post("/", (req, res) => {
           id: result[0][0].id,
           username: result[0][0].username,
           email: result[0][0].email,
-          //is_owner: result[0][0].is_owner,
-          //address: result[0][0].address,
-          //phone_number: result[0][0].phone_number,
         };
         console.log("userObject", userObject);
         res.writeHead(200, {

@@ -35,16 +35,15 @@ class Login extends Component {
     });
   };
   render() {
-    console.log(this.props);
+    console.log("this.props.user.email", this.props.user.email);
     let redirectVar = null;
     let message = "";
-    console.log("this.props.user id is", this.props.user.id);
+
     if (this.props.user && this.props.user.id) {
-      console.log("inside if");
       localStorage.setItem("email_id", this.props.user.email);
-      // localStorage.setItem("is_owner", this.props.user.is_owner);
       localStorage.setItem("user_id", this.props.user.id);
       localStorage.setItem("name", this.props.user.username);
+
       redirectVar = <Redirect to="/dashboard" />;
     } else if (this.props.user === "NO_USER" && this.state.loginFlag) {
       message = "No user with this email id";
@@ -54,8 +53,6 @@ class Login extends Component {
     ) {
       message = "Incorrect Password";
     }
-
-    console.log("Props value is:", this.props);
     return (
       <div>
         <Header />

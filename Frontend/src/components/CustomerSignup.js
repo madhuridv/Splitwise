@@ -22,11 +22,9 @@ class CustomerSignup extends Component {
     //prevent page from refresh
     e.preventDefault();
     const data = {
-      name: this.state.name,
-      email_id: this.state.email_id,
+      username: this.state.username,
+      email: this.state.email,
       password: this.state.password,
-      address: this.state.address,
-      phone_number: this.state.phone_number,
     };
 
     this.props.customerSignup(data);
@@ -40,11 +38,14 @@ class CustomerSignup extends Component {
     //redirect based on successful signup
     let redirectVar = null;
     let message = "";
-    if (localStorage.getItem("user_id")) {
-      // redirectVar = <Redirect to="/dashboard" />;
-    } else if (this.props.user === "USER_ADDED" && this.state.signupFlag) {
+
+    console.log("local storage value:", localStorage.getItem("user_id"));
+    console.log(this.props.user);
+    // if (localStorage.getItem("user_id")) {
+    //   redirectVar = <Redirect to="/dashboard" />; } else
+    if (this.props.user === "USER_ADDED" && this.state.signupFlag) {
       alert("You have registered successfully");
-      redirectVar = <Redirect to="/Login" />;
+      redirectVar = <Redirect to="/dashboard" />;
     } else if (this.props.user === "USER_EXISTS" && this.state.signupFlag) {
       message = "Email id is already registered";
     }
@@ -53,7 +54,7 @@ class CustomerSignup extends Component {
         {redirectVar}
 
         <div>
-          <img src={logo} style={{ height: "fit-content" }} alt="GrubHub" />
+          <img src={logo} style={{ height: "fit-content" }} alt="Splitwise" />
         </div>
 
         <div class="container">
@@ -67,7 +68,7 @@ class CustomerSignup extends Component {
                   <input
                     type="text"
                     class="form-control"
-                    name="name"
+                    name="username"
                     onChange={this.onChange}
                     placeholder="Name"
                     pattern="^[A-Za-z0-9 ]+$"
@@ -78,7 +79,7 @@ class CustomerSignup extends Component {
                   <input
                     type="email"
                     class="form-control"
-                    name="email_id"
+                    name="email"
                     onChange={this.onChange}
                     placeholder="Email Id"
                     pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$'%&*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])$"
