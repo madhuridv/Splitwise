@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import {
   InputGroup,
   Col,
@@ -15,13 +15,17 @@ import { connect } from "react-redux";
 import axios from "axios";
 import backendServer from "../webConfig";
 import { getUser, updateUser } from "../actions/userProfileActions";
-import profileIcon from "../images/profile_icon.png";
+
 //import "../styles/userProfile.css";
 
 class UserProfile extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      // name: localStorage.getItem("name"),
+      // email: localStorage.getItem("email_id"),
+    };
+
     this.onChange = this.onChange.bind(this);
     this.onImageChange = this.onImageChange.bind(this);
     this.onUpdate = this.onUpdate.bind(this);
@@ -37,12 +41,15 @@ class UserProfile extends Component {
       var { user } = nextProps;
 
       var userData = {
-        user_id: user.user_id || this.state.user_id,
-        name: user.name || this.state.name,
-        email_id: user.email_id || this.state.email_id,
+        user_id: user.id || this.state.user_id,
+        name: user.username || this.state.name,
+        email: user.email || this.state.email,
         address: user.address || this.state.address,
         phone_number: user.phone_number || this.state.phone_number,
         user_image: user.user_image || this.state.user_image,
+        currency: user.currency || this.state.currency,
+        user_language: user.user_language || this.state.user_language,
+        timezone: user.timezone || this.state.timezone,
       };
 
       this.setState(userData);
@@ -73,19 +80,19 @@ class UserProfile extends Component {
     };
     axios
       .post(
-        `${backendServer}/grubhub/uploads/user/${this.state.user_id}`,
+        `${backendServer}/uploads/${this.state.user_id}`,
         formData,
         uploadConfig
       )
       .then((response) => {
         alert("Image uploaded successfully!");
         this.setState({
-          fileText: "Choose file...",
+          fileText: "Choose file",
           user_image: response.data,
         });
       })
       .catch((err) => {
-        console.log("Error");
+        console.log("Error" + err);
       });
   };
 
@@ -98,29 +105,27 @@ class UserProfile extends Component {
   };
 
   render() {
+    console.log();
     var imageSrc,
       fileText = this.state.fileText || "Change your avatar",
       title = this.state.name;
     if (this.state) {
-      imageSrc = `${backendServer}/images/user/${this.state.user_image}`;
+      imageSrc = `${backendServer}/images/${this.state.user_image}`;
     }
     return (
       <div>
-        <div class="card-columns">
-          <div class="card">
-            <img
-              className="card-img-top"
-              src={profileIcon}
-              alt="profile picture"
-              width="5"
-              height="300"
-            />
+        <div class="card-columns ">
+          <div class="card border-0">
+            <div class="col-sm-6">
+              <img
+                className="card-img-top"
+                src={imageSrc}
+                alt="profile picture"
+              />
+            </div>
             {/* <img class="card-img-top" src={imageSrc} alt="profile picture" /> */}
             <div class="card-body">
               <form onSubmit={this.onUpload}>
-                <br />
-                <br />
-                <br />
                 <div class="form-group">
                   <label for="image">{fileText}</label>
                   <input
@@ -131,14 +136,15 @@ class UserProfile extends Component {
                     onChange={this.onImageChange}
                     required
                   />
-                </div>
-                <br />
-                <br />
+                </div>                
+                <Button type="submit" variant="primary">
+                    Upload
+                  </Button>
               </form>
             </div>
           </div>
 
-          <div class="card p-3">
+          <div class="card p-3 border-0">
             <h4>Profile</h4>
             <br />
             <Form onSubmit={this.onUpdate}>
@@ -187,26 +193,29 @@ class UserProfile extends Component {
             </Form>
           </div>
 
-          <div class="card">
+          <div class="card border-0">
             <div class="card-body">
-              <Form onSubmit={this.onUpdate}>
+              <Form onSubmit={this.onUpdate} onSelect={this.handleSelect}>
                 <Form.Row>
                   <Form.Group as={Col} controlId="currency">
                     <Form.Label> Your default Currency</Form.Label>
 
                     <InputGroup>
-                      <FormControl placeholder="Select your currency" />
+                      <FormControl
+                        placeholder="Select your currency"
+                        value={this.state.currency}
+                      />
                       <DropdownButton
                         as={InputGroup.Append}
                         variant="outline-secondary"
                         id="input-group-dropdown-2"
                       >
-                        <Dropdown.Item href="#">USD</Dropdown.Item>
-                        <Dropdown.Item href="#">INR</Dropdown.Item>
-                        <Dropdown.Item href="#">EUR</Dropdown.Item>
-                        <Dropdown.Item href="#">AFN</Dropdown.Item>
-                        <Dropdown.Item href="#">AUD</Dropdown.Item>
-                        <Dropdown.Item href="#">NZD</Dropdown.Item>
+                        <Dropdown.Item>USD</Dropdown.Item>
+                        <Dropdown.Item>INR</Dropdown.Item>
+                        <Dropdown.Item>EUR</Dropdown.Item>
+                        <Dropdown.Item>AFN</Dropdown.Item>
+                        <Dropdown.Item>AUD</Dropdown.Item>
+                        <Dropdown.Item>NZD</Dropdown.Item>
                       </DropdownButton>
                     </InputGroup>
                   </Form.Group>
@@ -216,24 +225,21 @@ class UserProfile extends Component {
                   <Form.Group as={Col} controlId="timezone">
                     <Form.Label> Your timezone</Form.Label>
                     <InputGroup>
-                      <FormControl placeholder="Select your timezone" />
+                      <FormControl
+                        placeholder="Select your timezone"
+                        value={this.state.timezone}
+                      />
                       <DropdownButton
                         as={InputGroup.Append}
                         variant="outline-secondary"
                         id="input-group-dropdown-2"
                       >
-                        <Dropdown.Item href="#">Chicago (GMT-6)</Dropdown.Item>
-                        <Dropdown.Item href="#">Denver (GMT-7)</Dropdown.Item>
-                        <Dropdown.Item href="#">Phoenix (GMT-7)</Dropdown.Item>
-                        <Dropdown.Item href="#">
-                          Los Angeles (GMT-8))
-                        </Dropdown.Item>
-                        <Dropdown.Item href="#">
-                          Anchorage (GMT-9)
-                        </Dropdown.Item>
-                        <Dropdown.Item href="#">
-                          Honolulu (GMT-10)
-                        </Dropdown.Item>
+                        <Dropdown.Item>Chicago (GMT-6)</Dropdown.Item>
+                        <Dropdown.Item>Denver (GMT-7)</Dropdown.Item>
+                        <Dropdown.Item>Phoenix (GMT-7)</Dropdown.Item>
+                        <Dropdown.Item>Los Angeles (GMT-8))</Dropdown.Item>
+                        <Dropdown.Item>Anchorage (GMT-9)</Dropdown.Item>
+                        <Dropdown.Item>Honolulu (GMT-10)</Dropdown.Item>
                       </DropdownButton>
                     </InputGroup>
                   </Form.Group>
@@ -244,7 +250,10 @@ class UserProfile extends Component {
                     <Form.Label> Your language</Form.Label>
 
                     <InputGroup>
-                      <FormControl placeholder="Select Your Language" />
+                      <FormControl
+                        placeholder="Select Your Language"
+                        value={this.state.user_language}
+                      />
                       <DropdownButton
                         as={InputGroup.Append}
                         variant="outline-secondary"

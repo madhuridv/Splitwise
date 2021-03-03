@@ -2,10 +2,9 @@ const app = require("./app");
 
 const login = require("./routes/login");
 const signup = require("./routes/signup");
-// const profile = require("./routes/profile");
-// const restaurant = require("./routes/restaurant");
-// const images = require("./routes/images");
-// const uploads = require("./routes/uploads");
+const profile = require("./routes/profile");
+const images = require("./routes/images");
+const uploads = require("./routes/uploads");
 // const menusections = require("./routes/menusections");
 // const menuitems = require("./routes/menuitems");
 // const cart = require("./routes/cart");
@@ -13,10 +12,9 @@ const signup = require("./routes/signup");
 
 app.use("/login", login);
 app.use("/signup", signup);
-// app.use("/grubhub/profile", profile);
-// app.use("/grubhub/restaurant", restaurant);
-// app.use("/grubhub/images", images);
-// app.use("/grubhub/uploads", uploads);
+app.use("/profile", profile);
+app.use("/images", images);
+app.use("/uploads", uploads);
 // app.use("/grubhub/menu", menusections);
 // app.use("/grubhub/menu", menuitems);
 // app.use("/grubhub/cart", cart);
