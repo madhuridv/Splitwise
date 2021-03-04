@@ -14,13 +14,13 @@ export const getUser = () => dispatch => {
         });
 }
 
-export const updateUser = (customerProfileData) => dispatch => {
+export const updateUser = (userProfileData) => dispatch => {
     axios.defaults.withCredentials = true;
-    axios.post(`${backendServer}/profile/customer`, customerProfileData)
+    axios.post(`${backendServer}/profile/user`, userProfileData)
         .then(response => response.data)
         .then(data => {
-            if (data === 'CUSTOMER_UPDATED') {
-                localStorage.setItem("name", customerProfileData.name);
+            if (data === 'USER_UPDATED') {
+                localStorage.setItem("name", userProfileData.name);
                 alert("Profile Updated Successfully!");
             }
             return dispatch({

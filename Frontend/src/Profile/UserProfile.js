@@ -30,6 +30,7 @@ class UserProfile extends Component {
     this.onImageChange = this.onImageChange.bind(this);
     this.onUpdate = this.onUpdate.bind(this);
     this.onUpload = this.onUpload.bind(this);
+    
   }
 
   componentWillMount() {
@@ -101,6 +102,7 @@ class UserProfile extends Component {
     e.preventDefault();
 
     let data = Object.assign({}, this.state);
+    console.log("data" + this.state);
     this.props.updateUser(data);
   };
 
@@ -136,10 +138,10 @@ class UserProfile extends Component {
                     onChange={this.onImageChange}
                     required
                   />
-                </div>                
+                </div>
                 <Button type="submit" variant="primary">
-                    Upload
-                  </Button>
+                  Upload
+                </Button>
               </form>
             </div>
           </div>
@@ -190,12 +192,15 @@ class UserProfile extends Component {
                   />
                 </Form.Group>
               </Form.Row>
+              <Button type="submit" variant="primary">
+                Save
+              </Button>
             </Form>
           </div>
 
           <div class="card border-0">
             <div class="card-body">
-              <Form onSubmit={this.onUpdate} onSelect={this.handleSelect}>
+              <Form onSubmit={this.onUpdate} >
                 <Form.Row>
                   <Form.Group as={Col} controlId="currency">
                     <Form.Label> Your default Currency</Form.Label>
@@ -204,6 +209,7 @@ class UserProfile extends Component {
                       <FormControl
                         placeholder="Select your currency"
                         value={this.state.currency}
+                        
                       />
                       <DropdownButton
                         as={InputGroup.Append}
@@ -211,11 +217,11 @@ class UserProfile extends Component {
                         id="input-group-dropdown-2"
                       >
                         <Dropdown.Item>USD</Dropdown.Item>
-                        <Dropdown.Item>INR</Dropdown.Item>
+                        <Dropdown.Item>KWD </Dropdown.Item>
+                        <Dropdown.Item>BHD</Dropdown.Item>
+                        <Dropdown.Item>GBP</Dropdown.Item>
                         <Dropdown.Item>EUR</Dropdown.Item>
-                        <Dropdown.Item>AFN</Dropdown.Item>
-                        <Dropdown.Item>AUD</Dropdown.Item>
-                        <Dropdown.Item>NZD</Dropdown.Item>
+                        <Dropdown.Item>CAD</Dropdown.Item>
                       </DropdownButton>
                     </InputGroup>
                   </Form.Group>
@@ -269,9 +275,6 @@ class UserProfile extends Component {
               </Form>
             </div>
           </div>
-          <Button type="submit" variant="primary">
-            Save
-          </Button>
         </div>
       </div>
     );

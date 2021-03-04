@@ -38,12 +38,13 @@ class CustomerSignup extends Component {
     //redirect based on successful signup
     let redirectVar = null;
     let message = "";
-
+  
     console.log("local storage value:", localStorage.getItem("user_id"));
     console.log(this.props.user);
     // if (localStorage.getItem("user_id")) {
     //   redirectVar = <Redirect to="/dashboard" />; } else
     if (this.props.user === "USER_ADDED" && this.state.signupFlag) {
+      
       alert("You have registered successfully");
       redirectVar = <Redirect to="/dashboard" />;
     } else if (this.props.user === "USER_EXISTS" && this.state.signupFlag) {

@@ -8,7 +8,9 @@ router.get("/:user_image", (req, res) => {
   console.log("inside image");
   var image =
     path.join(__dirname, "..") + "/public/usersImage/" + req.params.user_image;
-  console.log(req.params.user_image);
+  
+  let isPresent = fs.existsSync(image);
+  console.log(isPresent);
   if (fs.existsSync(image)) {
     res.sendFile(image);
   } else {
