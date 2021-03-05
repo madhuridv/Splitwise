@@ -25,6 +25,7 @@ class DashboardHeader extends Component {
     nameMsg = (
       <Dropdown>
         <Dropdown.Toggle variant="link" id="dropdown-basic">
+          
           Hi {this.state.name}! &nbsp;
           <img className="picture" src={profile_icon} alt="profile_icon" />
         </Dropdown.Toggle>

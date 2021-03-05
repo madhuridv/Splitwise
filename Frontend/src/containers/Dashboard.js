@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+//import cookie from "react-cookies";
 import DashboardNavbar from "../components/Dashboard/DashboardNavbar";
 import DashboardHeader from "../components/Dashboard/DashboardHeader";
 
@@ -14,6 +14,9 @@ class Dashboard extends Component {
   //   console.log("this is username ...........", name);
   // }
   render() {
+    // if (!cookie.load("cookie")) {
+    //   redirectVar = <Redirect to="/login" />;
+    // }
     return (
       <div>
         {/* {this.alwaysRun(this.state.name)} */}

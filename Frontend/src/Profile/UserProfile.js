@@ -30,7 +30,6 @@ class UserProfile extends Component {
     this.onImageChange = this.onImageChange.bind(this);
     this.onUpdate = this.onUpdate.bind(this);
     this.onUpload = this.onUpload.bind(this);
-    
   }
 
   componentWillMount() {
@@ -107,7 +106,7 @@ class UserProfile extends Component {
   };
 
   render() {
-    console.log();
+    
     var imageSrc,
       fileText = this.state.fileText || "Change your avatar",
       title = this.state.name;
@@ -200,7 +199,7 @@ class UserProfile extends Component {
 
           <div class="card border-0">
             <div class="card-body">
-              <Form onSubmit={this.onUpdate} >
+              <Form onSubmit={this.onUpdate}>
                 <Form.Row>
                   <Form.Group as={Col} controlId="currency">
                     <Form.Label> Your default Currency</Form.Label>
@@ -209,7 +208,6 @@ class UserProfile extends Component {
                       <FormControl
                         placeholder="Select your currency"
                         value={this.state.currency}
-                        
                       />
                       <DropdownButton
                         as={InputGroup.Append}

@@ -35,7 +35,6 @@ class Login extends Component {
     });
   };
   render() {
-    console.log("this.props.user.email", this.props.user.email);
     let redirectVar = null;
     let message = "";
 
@@ -43,6 +42,9 @@ class Login extends Component {
       localStorage.setItem("email_id", this.props.user.email);
       localStorage.setItem("user_id", this.props.user.id);
       localStorage.setItem("name", this.props.user.username);
+      console.log(localStorage.getItem("name"));
+      console.log(localStorage.getItem("email_id"));
+      console.log(localStorage.getItem("user_id"));
 
       redirectVar = <Redirect to="/dashboard" />;
     } else if (this.props.user === "NO_USER" && this.state.loginFlag) {
@@ -69,42 +71,40 @@ class Login extends Component {
           </div>
           <div class="signup-form">
             <h2>WELCOME TO SPLITWISE</h2>
-          </div>
-          <br />
-          <form onSubmit={this.onSubmit}>
-            <div style={{ color: "#ff0000" }}>{message}</div>
-            <br />
-            <div class="form-group">
-              <input
-                type="email"
-                class="form-control"
-                onChange={this.onChange}
-                name="email"
-                placeholder="Email Id"
-                pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$'%&*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])$"
-                title="Please enter valid email address"
-                required
-              />
-            </div>
+            <form onSubmit={this.onSubmit}>
+              <div style={{ color: "#ff0000" }}>{message}</div>
+              <br />
+              <div class="form-group">
+                <input
+                  type="email"
+                  class="form-control"
+                  onChange={this.onChange}
+                  name="email"
+                  placeholder="Email Id"
+                  pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$'%&*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])$"
+                  title="Please enter valid email address"
+                  required
+                />
+              </div>
 
-            <div class="form-group">
-              <input
-                type="password"
-                class="form-control"
-                onChange={this.onChange}
-                name="password"
-                placeholder="Password"
-                required
-              />
-            </div>
-            <button type="submit" class="btn btn-primary">
-              Login
-            </button>
-          </form>
+              <div class="form-group">
+                <input
+                  type="password"
+                  class="form-control"
+                  onChange={this.onChange}
+                  name="password"
+                  placeholder="Password"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-primary">
+                Login
+              </button>
+            </form>
+          </div>
         </div>
         <br />
         <br />
-        <div></div>
       </div>
     );
   }

@@ -2,12 +2,13 @@ import { React, Component } from "react";
 import { Switch, Route } from "react-router-dom";
 import { Landing } from "./components/landing";
 import Login from "./components/Login";
-import CustomerSignup from "./components/CustomerSignup";
+import UserSignup from "./components/UserSignup";
 import Dashboard from "./containers/Dashboard";
 import { Provider } from "react-redux";
 import store from "./store";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Profile from "./Profile/Profile";
+import Group from "./Group/Group";
 
 class App extends Component {
   render() {
@@ -17,9 +18,10 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Landing}></Route>
             <Route exact path="/login" component={Login}></Route>
-            <Route path="/signup" component={CustomerSignup} />
+            <Route path="/signup" component={UserSignup} />
             <Route exact path="/dashboard" component={Dashboard}></Route>
             <Route path="/profile" component={Profile} />
+            <Route path="/creategroup" component={Group} />
           </Switch>
         </div>
       </Provider>

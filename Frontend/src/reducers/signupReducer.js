@@ -1,4 +1,4 @@
-import { CUSTOMER_SIGNUP } from "../actions/types";
+import { USER_SIGNUP } from "../actions/types";
 
 const initialState = {
   user: {},
@@ -7,7 +7,7 @@ const initialState = {
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function (state = initialState, action) {
   switch (action.type) {
-    case CUSTOMER_SIGNUP:
+    case USER_SIGNUP:
       return {
         ...state,
         user: action.payload,
