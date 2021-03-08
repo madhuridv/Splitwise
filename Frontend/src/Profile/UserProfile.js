@@ -106,7 +106,6 @@ class UserProfile extends Component {
   };
 
   render() {
-    
     var imageSrc,
       fileText = this.state.fileText || "Change your avatar",
       title = this.state.name;
@@ -169,10 +168,11 @@ class UserProfile extends Component {
                   <Form.Label>Your email address</Form.Label>
                   <Button variant="link">Edit</Button>
                   <Form.Control
-                    type="email"
+                    type="text"
                     name="email"
                     value={this.state.email}
-                    disabled
+                    onChange={this.onChange}
+                    // disabled
                   />
                 </Form.Group>
               </Form.Row>
@@ -202,14 +202,21 @@ class UserProfile extends Component {
               <Form onSubmit={this.onUpdate}>
                 <Form.Row>
                   <Form.Group as={Col} controlId="currency">
-                    <Form.Label> Your default Currency</Form.Label>
-
-                    <InputGroup>
-                      <FormControl
-                        placeholder="Select your currency"
-                        value={this.state.currency}
-                      />
-                      <DropdownButton
+                    <Form.Label> Your Default Currency</Form.Label>
+                    <br></br>
+                    <select
+                      class="form-select"
+                      aria-label="Default select example"
+                    >
+                      <option selected>{this.state.currency}</option>
+                      <option value="1">USD</option>
+                      <option value="2">KWD</option>
+                      <option value="3">BHD</option>
+                      <option value="4">GBP</option>
+                      <option value="5">EUR</option>
+                      <option value="6">CAD</option>
+                    </select>
+                    {/* <DropdownButton 
                         as={InputGroup.Append}
                         variant="outline-secondary"
                         id="input-group-dropdown-2"
@@ -220,8 +227,7 @@ class UserProfile extends Component {
                         <Dropdown.Item>GBP</Dropdown.Item>
                         <Dropdown.Item>EUR</Dropdown.Item>
                         <Dropdown.Item>CAD</Dropdown.Item>
-                      </DropdownButton>
-                    </InputGroup>
+                      </DropdownButton> */}
                   </Form.Group>
                 </Form.Row>
 

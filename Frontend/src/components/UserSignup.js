@@ -43,7 +43,7 @@ class UserSignup extends Component {
     // if (localStorage.getItem("user_id")) {
     //   redirectVar = <Redirect to="/dashboard" />; } else
     if (this.props.user === "USER_ADDED" && this.state.signupFlag) {
-      alert("You have registered successfully");     
+      alert("You have registered successfully");
       redirectVar = <Redirect to="/dashboard" />;
     } else if (this.props.user === "USER_EXISTS" && this.state.signupFlag) {
       message = "Email ID is already registered";
@@ -63,42 +63,38 @@ class UserSignup extends Component {
           <br />
 
           <form onSubmit={this.onSubmit}>
-            
-              <label htmlFor="">Hi there! My name is</label>
-              <input
-                type="text"
-                class="form-control"
-                name="username"
-                onChange={this.onChange}
-                placeholder="Name"
-                pattern="^[A-Za-z0-9 ]+$"
-                required
-              />
-            
-            
-              <label htmlFor="">Here’s my email address:</label>
-              <input
-                type="email"
-                class="form-control"
-                name="email"
-                onChange={this.onChange}
-                placeholder="Email Id"
-                pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$'%&*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])$"
-                title="Please enter valid email address"
-                required
-              />
-            
-            
-              <label htmlFor="">And here’s my password:</label>
-              <input
-                type="password"
-                class="form-control"
-                name="password"
-                onChange={this.onChange}
-                placeholder="Password"
-                required
-              />
-        
+            <label htmlFor="">Hi there! My name is</label>
+            <input
+              type="text"
+              class="form-control"
+              name="username"
+              onChange={this.onChange}
+              placeholder="Name"
+              pattern="^[A-Za-z0-9 ]+$"
+              required
+            />
+
+            <label htmlFor="">Here’s my email address:</label>
+            <input
+              type="email"
+              class="form-control"
+              name="email"
+              onChange={this.onChange}
+              placeholder="Email Id"
+              pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$'%&*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])$"
+              title="Please enter valid email address"
+              required
+            />
+
+            <label htmlFor="">And here’s my password:</label>
+            <input
+              type="password"
+              class="form-control"
+              name="password"
+              onChange={this.onChange}
+              placeholder="Password"
+              required
+            />
 
             <div style={{ color: "#ff0000" }}>{message}</div>
             <br />
