@@ -43,6 +43,9 @@ class UserSignup extends Component {
     // if (localStorage.getItem("user_id")) {
     //   redirectVar = <Redirect to="/dashboard" />; } else
     if (this.props.user === "USER_ADDED" && this.state.signupFlag) {
+      console.log(localStorage.getItem("name"));
+      console.log(localStorage.getItem("email_id"));
+      console.log(localStorage.getItem("user_id"));
       alert("You have registered successfully");
       redirectVar = <Redirect to="/dashboard" />;
     } else if (this.props.user === "USER_EXISTS" && this.state.signupFlag) {

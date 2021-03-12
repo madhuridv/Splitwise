@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Redirect } from "react-router";
 import DashboardNavbar from "../components/Dashboard/DashboardNavbar";
 import UserProfile from "./UserProfile";
+import "../styles/userProfile.css";
 
 class Profile extends Component {
   componentWillMount() {

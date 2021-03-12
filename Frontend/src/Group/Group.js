@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import DashboardNavbar from "../components/Dashboard/DashboardNavbar";
 import CreateGroup from "./CreateGroup";
 import { Redirect } from "react-router";
+import "../styles/signup.css";
 
 class Group extends Component {
-    componentWillMount() {
-        document.title = "Create group";
-      }
+  componentWillMount() {
+    document.title = "Create group";
+  }
   render() {
     let groupComp = null;
     let redirectVar = null;
@@ -16,7 +17,7 @@ class Group extends Component {
     } else {
       redirectVar = <Redirect to="/" />;
     }
-    
+
     return (
       <div>
         {redirectVar}

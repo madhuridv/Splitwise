@@ -24,9 +24,10 @@ router.get("/:user_id", (req, res) => {
 
 router.post("/user", (req, res) => {
   console.log("inside update");
-  console.log(req.body.phone_number);
+  console.log(req.body.user_language);
+  console.log(req.body.timezone);
 
-  let sql = `CALL updateUser('${req.body.user_id}','${req.body.email}','${req.body.name}', '${req.body.address}', '${req.body.phone_number}');`;
+  let sql = `CALL updateUser('${req.body.user_id}','${req.body.email}','${req.body.name}', '${req.body.address}', '${req.body.phone_number}', '${req.body.currency}', '${req.body.timezone}', '${req.body.user_language}');`;
   pool.query(sql, (err, result) => {
     console.log("result is", result);
     if (err) {

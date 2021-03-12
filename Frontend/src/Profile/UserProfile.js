@@ -70,6 +70,7 @@ class UserProfile extends Component {
   };
 
   onUpload = (e) => {
+    console.log("inside upload");
     e.preventDefault();
     const formData = new FormData();
     formData.append("image", this.state.file);
@@ -106,179 +107,138 @@ class UserProfile extends Component {
   };
 
   render() {
-    var imageSrc,
-      fileText = this.state.fileText || "Change your avatar",
-      title = this.state.name;
+    var imageSrc;
+
     if (this.state) {
       imageSrc = `${backendServer}/images/${this.state.user_image}`;
     }
     return (
-      <div>
-        <div class="card-columns ">
-          <div class="card border-0">
-            <div class="col-sm-6">
-              <img
-                className="card-img-top"
-                src={imageSrc}
-                alt="profile picture"
+      <div className="container signup">
+        <div className="">
+          <img
+            className=""
+            src={imageSrc}
+            alt="profile picture"
+            // style={{ height: "fit-content" }}
+          />
+
+          <form onSubmit={this.onUpload}>
+            <div class="form-group">
+              <label for="image">Change your avatar</label>
+              <input
+                type="file"
+                class="form-control-file"
+                name="image"
+                accept="image/*"
+                onChange={this.onImageChange}
+                required
               />
             </div>
-            {/* <img class="card-img-top" src={imageSrc} alt="profile picture" /> */}
-            <div class="card-body">
-              <form onSubmit={this.onUpload}>
-                <div class="form-group">
-                  <label for="image">{fileText}</label>
+            <Button type="submit" variant="primary">
+              Upload
+            </Button>
+          </form>
+        </div>
+        <div class="signup-form">
+          <form onSubmit={this.onUpdate}>
+            <div className="row">
+              <div className="col">
+                <div className="form-group">
+                  <label htmlFor="name">Your name</label>
                   <input
-                    type="file"
-                    class="form-control-file"
-                    name="image"
-                    accept="image/*"
-                    onChange={this.onImageChange}
-                    required
-                  />
-                </div>
-                <Button type="submit" variant="primary">
-                  Upload
-                </Button>
-              </form>
-            </div>
-          </div>
-
-          <div class="card p-3 border-0">
-            <h4>Profile</h4>
-            <br />
-            <Form onSubmit={this.onUpdate}>
-              <Form.Row>
-                <Form.Group as={Col} controlId="name">
-                  <Form.Label> Your Name</Form.Label>
-                  <Button variant="link">Edit</Button>
-                  <Form.Control
-                    name="name"
                     type="text"
+                    className="form-control"
+                    name="name"
                     onChange={this.onChange}
                     value={this.state.name}
-                    pattern="^[A-Za-z0-9 ]+$"
-                    required={true}
                   />
-                </Form.Group>
-              </Form.Row>
+                </div>
 
-              <Form.Row>
-                <Form.Group as={Col} controlId="email_id">
-                  <Form.Label>Your email address</Form.Label>
-                  <Button variant="link">Edit</Button>
-                  <Form.Control
+                <div className="form-group">
+                  <label htmlFor="email">Your email address</label>
+                  <input
                     type="text"
                     name="email"
-                    value={this.state.email}
+                    className="form-control"
                     onChange={this.onChange}
-                    // disabled
+                    value={this.state.email}
                   />
-                </Form.Group>
-              </Form.Row>
+                </div>
 
-              <Form.Row>
-                <Form.Group as={Col} controlId="formGridZip">
-                  <Form.Label>Your phone number</Form.Label>
-                  <Button variant="link">Edit</Button>
-                  <Form.Control
+                <div className="form-group">
+                  <label
+                    htmlFor="phone_number
+                  "
+                  >
+                    Your phone number
+                  </label>
+                  <input
                     type="text"
                     name="phone_number"
+                    className="form-control"
                     onChange={this.onChange}
                     value={this.state.phone_number}
-                    required={true}
-                    pattern="^[0-9]+$"
                   />
-                </Form.Group>
-              </Form.Row>
-              <Button type="submit" variant="primary">
-                Save
-              </Button>
-            </Form>
-          </div>
+                </div>
+              </div>
 
-          <div class="card border-0">
-            <div class="card-body">
-              <Form onSubmit={this.onUpdate}>
-                <Form.Row>
-                  <Form.Group as={Col} controlId="currency">
-                    <Form.Label> Your Default Currency</Form.Label>
-                    <br></br>
+              <div className="col">
+                <div className="signup-block">
+                  <div className="form-group">
+                    <label htmlFor="">Your Default currency</label>
+                    <br />
+                    <label htmlFor="">
+                      <small>(for new expenses)</small>
+                    </label>
                     <select
-                      class="form-select"
-                      aria-label="Default select example"
+                      name="currency"
+                      className="form-control"
+                      value={this.state.currency}
+                      onChange={this.onChange}
                     >
-                      <option selected>{this.state.currency}</option>
-                      <option value="1">USD</option>
-                      <option value="2">KWD</option>
-                      <option value="3">BHD</option>
-                      <option value="4">GBP</option>
-                      <option value="5">EUR</option>
-                      <option value="6">CAD</option>
+                      <option value="USD">USD</option>
+                      <option value="EUR">EUR</option>
+                      <option value="GBP">GBP</option>
+                      <option value="HUF">HUF</option>
+                      <option value="HUF">INR</option>
                     </select>
-                    {/* <DropdownButton 
-                        as={InputGroup.Append}
-                        variant="outline-secondary"
-                        id="input-group-dropdown-2"
-                      >
-                        <Dropdown.Item>USD</Dropdown.Item>
-                        <Dropdown.Item>KWD </Dropdown.Item>
-                        <Dropdown.Item>BHD</Dropdown.Item>
-                        <Dropdown.Item>GBP</Dropdown.Item>
-                        <Dropdown.Item>EUR</Dropdown.Item>
-                        <Dropdown.Item>CAD</Dropdown.Item>
-                      </DropdownButton> */}
-                  </Form.Group>
-                </Form.Row>
-
-                <Form.Row>
-                  <Form.Group as={Col} controlId="timezone">
-                    <Form.Label> Your timezone</Form.Label>
-                    <InputGroup>
-                      <FormControl
-                        placeholder="Select your timezone"
-                        value={this.state.timezone}
-                      />
-                      <DropdownButton
-                        as={InputGroup.Append}
-                        variant="outline-secondary"
-                        id="input-group-dropdown-2"
-                      >
-                        <Dropdown.Item>Chicago (GMT-6)</Dropdown.Item>
-                        <Dropdown.Item>Denver (GMT-7)</Dropdown.Item>
-                        <Dropdown.Item>Phoenix (GMT-7)</Dropdown.Item>
-                        <Dropdown.Item>Los Angeles (GMT-8))</Dropdown.Item>
-                        <Dropdown.Item>Anchorage (GMT-9)</Dropdown.Item>
-                        <Dropdown.Item>Honolulu (GMT-10)</Dropdown.Item>
-                      </DropdownButton>
-                    </InputGroup>
-                  </Form.Group>
-                </Form.Row>
-
-                <Form.Row>
-                  <Form.Group as={Col} controlId="language">
-                    <Form.Label> Your language</Form.Label>
-
-                    <InputGroup>
-                      <FormControl
-                        placeholder="Select Your Language"
-                        value={this.state.user_language}
-                      />
-                      <DropdownButton
-                        as={InputGroup.Append}
-                        variant="outline-secondary"
-                        id="input-group-dropdown-2"
-                      >
-                        <Dropdown.Item href="#">English</Dropdown.Item>
-                        <Dropdown.Item href="#">Spanish</Dropdown.Item>
-                        <Dropdown.Item href="#">Deutch</Dropdown.Item>
-                      </DropdownButton>
-                    </InputGroup>
-                  </Form.Group>
-                </Form.Row>
-              </Form>
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="">You timezone</label>
+                    <select
+                      name="timezone"
+                      className="form-control"
+                      value={this.state.timezone}
+                      onChange={this.onChange}
+                    >
+                      <option value="(GMT-08:00) Pacific Time">
+                        (GMT-08:00) Pacific Time
+                      </option>
+                      <option value="(GMT-06:00) Central America">
+                        (GMT-06:00) Central America
+                      </option>
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="">Language</label>
+                    <select
+                      name="user_language"
+                      className="form-control"
+                      value={this.state.user_language}
+                      onChange={this.onChange}
+                    >
+                      <option value="English">English</option>
+                      <option value="Spanish">Spanish</option>
+                      <option value="Deutch">Deutch</option>
+                    </select>
+                  </div>
+                  <button type="submit" className="btn btn-primary">
+                    Save
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     );
