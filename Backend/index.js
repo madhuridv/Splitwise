@@ -7,14 +7,12 @@ const images = require("./routes/images");
 const uploads = require("./routes/uploads");
 const creategroup = require("./routes/creategroup");
 
-
 app.use("/login", login);
 app.use("/signup", signup);
 app.use("/profile", profile);
 app.use("/images", images);
 app.use("/uploads", uploads);
 app.use("/creategroup", creategroup);
-
 
 const port = process.env.PORT || 3001;
 var server = app.listen(port, () => {

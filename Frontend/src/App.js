@@ -9,6 +9,7 @@ import store from "./store";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Profile from "./Profile/Profile";
 import Group from "./Group/Group";
+import AddExpenseGroup from "./AddExpense/Add";
 
 class App extends Component {
   render() {
@@ -22,6 +23,7 @@ class App extends Component {
             <Route exact path="/dashboard" component={Dashboard}></Route>
             <Route path="/profile" component={Profile} />
             <Route path="/creategroup" component={Group} />
+            <Route path="/expense" component={AddExpenseGroup} />
           </Switch>
         </div>
       </Provider>

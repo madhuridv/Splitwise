@@ -30,3 +30,20 @@
   background: #ff652f;
   color: white;
 }
+
+.autoCompleteText {
+  border: 1px solid grey;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px 1px rgba(0, 0, 0, 0.18);
+}
+
+.autoCompleteText input {
+  border: 1px solid grey;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px 1px rgba(0, 0, 0, 0.18);
+  /* width: 100%;
+  border: none; */
+}
+
+.autoCompleteText ul {
+  list-style-type: none;
+  text-align: left;
+}

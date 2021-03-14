@@ -1,19 +1,32 @@
 import React, { Component } from "react";
 import backendServer from "../webConfig";
 import axios from "axios";
-import { Col, Form, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
+import { Multiselect } from "multiselect-react-dropdown";
 
 class CreateGroup extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      values: [{ mem_name: null, mem_email: null }],
-      user_id: localStorage.getItem("user_id"),
-      name: localStorage.getItem("name"),
       email: localStorage.getItem("email_id"),
-      suggestname: null,
+      groupname: "",
+      userData: [],
+      options: [
+        { name: "Srigar", id: 1 },
+        { name: "Sam", id: 2 },
+      ],
+      selected: [],
     };
+    this.onChange = this.onChange.bind(this);
   }
+
+  onSelect = (data) => {
+    this.setState({
+      selected: data,
+    });
+    console.log("selected", this.state.selected);
+  };
 
   componentWillMount() {
     axios.defaults.withCredentials = true;
@@ -22,59 +35,14 @@ class CreateGroup extends Component {
       .then((response) => {
         console.log("data is", response.data);
         this.setState({
-          suggestname: response.data[0].username
+          userData: this.state.userData.concat(response.data),
         });
-        console.log("suggestname", this.state.suggestname);
       })
       .catch((error) => {
         console.log("error:", error);
       });
   }
 
-  createUI() {
-    return this.state.values.map((el, i) => (
-      <div key={i}>
-        <input
-          type="text"
-          value={el.mem_name || ""}
-          onChange={this.handleChangeName.bind(this, i)}
-        />
-        <input
-          type="text"
-          value={el.mem_email || ""}
-          onChange={this.handleChangeEmail.bind(this, i)}
-        />
-        <input
-          type="button"
-          value="remove"
-          onClick={this.removeClick.bind(this, i)}
-        />
-      </div>
-    ));
-  }
-
-  handleChangeName(i, event) {
-    let values = [...this.state.values];
-    values[i].mem_name = event.target.value;
-    this.setState({ values });
-  }
-  handleChangeEmail(i, event) {
-    let values = [...this.state.values];
-    values[i].mem_email = event.target.value;
-    this.setState({ values });
-  }
-
-  addClick() {
-    this.setState((prevState) => ({
-      values: [...prevState.values, { mem_name: null, mem_email: null }],
-    }));
-  }
-
-  removeClick(i) {
-    let values = [...this.state.values];
-    values.splice(i, 1);
-    this.setState({ values });
-  }
   onImageChange = (e) => {
     this.setState({
       file: e.target.files[0],
@@ -82,33 +50,6 @@ class CreateGroup extends Component {
     });
   };
 
-  onSubmit = (e) => {
-    e.preventDefault();
-    console.log(JSON.stringify(this.state.values));
-
-    const data = {
-      user_id: this.state.user_id,
-      name: this.state.name,
-      email: this.state.email,
-      groupname: this.state.groupname,
-      values: this.state.values,
-    };
-
-    console.log("data", data);
-
-    axios
-      .post(`${backendServer}/creategroup`, data)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((err) => console.log("error", err));
-  };
-
-  onChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
-  };
   onUpload = (e) => {
     console.log("inside upload");
     e.preventDefault();
@@ -136,20 +77,56 @@ class CreateGroup extends Component {
         console.log("Error" + err);
       });
   };
+
+  onSubmit = (e) => {
+    e.preventDefault();
+    console.log(this.state.selected);
+    let members = [];
+
+    for (var i = 0; i < this.state.selected.length; i++) {
+      members[i] = this.state.selected[i].email;
+    }
+    console.log("members array:", members);
+
+    const groupData = {
+      email: this.state.email,
+      groupname: this.state.groupname,
+
+      members: members,
+    };
+
+    console.log("groupData is :", groupData);
+    // axios.defaults.withCredentials = true;
+    axios
+      .post(`${backendServer}/creategroup/addgroup`, groupData)
+      .then((response) => {
+        console.log("response after post", response);
+        if (response.status == 200 && response.data === "GROUP_ADDED") {
+          alert("Group created sucessfully!");
+        } 
+      })
+      .catch((error) => {
+        alert("Group name already exists!");
+        console.log("error:", error);
+      });
+  };
+
+  onChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  };
   render() {
     var imageSrc;
+    let details = this.state.userData;
+
     if (this.state) {
       imageSrc = `${backendServer}/images/${this.state.user_image}`;
     }
     return (
       <div className="container signup">
         <div className="">
-          <img
-            className=""
-            src={imageSrc}
-            alt="profile picture"
-            // style={{ height: "fit-content" }}
-          />
+          <img className="" src={imageSrc} alt="profile picture" />
 
           <form onSubmit={this.onUpload}>
             <div className="form-group">
@@ -187,35 +164,14 @@ class CreateGroup extends Component {
                 </div>
                 <br></br>
                 <label>GROUP MEMBERS</label>
-                <div>
-                  <input type="text" value={this.state.name} />
-                  <input type="text" value={this.state.email} />
-                </div>
-                {this.state.values.map((el, i) => (
-                  <div key={i}>
-                    <input
-                      type="text"
-                      name="mem_name"
-                      value={el.mem_name || ""}
-                      onChange={(e) => this.handleChangeName(i, e)}
-                    />
-                    <input
-                      type="text"
-                      name="mem_email"
-                      value={el.mem_email || ""}
-                      onChange={(e) => this.handleChangeEmail(i, e)}
-                    />
+                <Multiselect
+                  options={details} // Options to display in the dropdown
+                  //selectedValues={this.state.selectedValues} // Preselected value to persist in dropdown
+                  onSelect={this.onSelect}
+                  displayValue="email" // Property name to display in the dropdown options
+                />
 
-                    <input
-                      type="button"
-                      value="X"
-                      onClick={() => this.removeClick(i)}
-                    />
-                  </div>
-                ))}
-                <Button variant="link" onClick={() => this.addClick()}>
-                  +Add Member
-                </Button>
+                <br></br>
 
                 <div className="form-group">
                   <br></br>
