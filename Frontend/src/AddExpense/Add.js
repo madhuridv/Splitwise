@@ -10,9 +10,9 @@ export class Add extends Component {
   componentWillMount() {
     document.title = "Create group";
   }
-  static propTypes = {
-    prop: PropTypes,
-  };
+  // static propTypes = {
+  //   prop: PropTypes,
+  // };
 
   render() {
     return (
@@ -24,8 +24,9 @@ export class Add extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({});
+// const mapStateToProps = (state) => ({});
 
-const mapDispatchToProps = {};
+// const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Add);
+export default Add;
+//connect(mapStateToProps, mapDispatchToProps)(Add);

@@ -103,7 +103,9 @@ class CreateGroup extends Component {
         console.log("response after post", response);
         if (response.status == 200 && response.data === "GROUP_ADDED") {
           alert("Group created sucessfully!");
-        } 
+        } else {
+          alert("Group name already exists!");
+        }
       })
       .catch((error) => {
         alert("Group name already exists!");
