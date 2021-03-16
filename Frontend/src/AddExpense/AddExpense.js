@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Modal } from "react-bootstrap";
+import axios from "axios";
+import backendServer from "../webConfig";
 
 function AddExpense() {
   const [show, setShow] = useState(false);
@@ -8,10 +10,11 @@ function AddExpense() {
   const handleShow = () => setShow(true);
   const [description, setdescription] = useState();
   const [amount, setAmount] = useState();
+  const [groupName, setGroupName] = useState();
 
   const onChangeDesc = (e) => {
     setdescription({
-      [e.target.name]: e.target.value,
+      description: e.target.value,
     });
   };
   const onChangeAmt = (e) => {
@@ -20,24 +23,43 @@ function AddExpense() {
     });
   };
 
+  
+
   const onSubmitExpense = (e) => {
     e.preventDefault();
-    console.log("Form on submit");
-    console.log(description);
-    console.log(amount);
+
+    console.log(Object.values(description));
+
+    const expenseData = {
+      description: Object.values(description)[0],
+      amount: Object.values(amount)[0],
+      groupName: "firstgroup",
+      addedBy: localStorage.getItem("name"), //email
+    };
+
+    console.log("data to post", expenseData);
+
+    axios.defaults.withCredentials = true;
+    axios
+      .post(`${backendServer}/mygroup/expense`, expenseData)
+      .then((response) => {
+        console.log("response after post", response);
+        if (response.status == 200 && response.data === "EXPENSE_ADDED") {
+          alert("Expense added sucessfully!");
+        }
+      })
+      .catch((error) => {
+        alert("Failed to add expense");
+        console.log("error:", error);
+      });
   };
 
   return (
     <div className="">
-      <div className="MidDash">
-        <div className="DashHeader">
-          <h3>Groups</h3>
+      <button className="btn float-right expense" onClick={handleShow}>
+        Add an expense
+      </button>
 
-          <button className="btn float-right expense" onClick={handleShow}>
-            Add an expense
-          </button>
-        </div>
-      </div>
       <Modal show={show} onHide={handleClose}>
         <div className="container mt-4">
           <Modal.Header closeButton>
@@ -62,6 +84,7 @@ function AddExpense() {
                       onChange={onChangeDesc}
                       className="form-control"
                       type="text"
+                      required
                     />
                     <p id="error-description" className="text-danger"></p>
                   </div>
@@ -76,6 +99,7 @@ function AddExpense() {
                       onChange={onChangeAmt}
                       className="form-control"
                       type="number"
+                      required
                     />
                     <p id="error-expense-amount" className="text-danger"></p>
                   </div>

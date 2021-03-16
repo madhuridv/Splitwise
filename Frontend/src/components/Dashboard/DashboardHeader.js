@@ -1,44 +1,21 @@
-import React from "react";
-import Button from "../../Button";
+import React, { Component } from "react";
 import "../../styles/dashboard.css";
+import DashboardMiddle from "./DashboardMiddle";
 
-function DashboardHeader(props) {
-  function handleChangeExp() {
-    const currentView = props.viewType.map((item) => {
-      item.modal = true;
-      return item;
-    });
-    props.method(currentView);
-  }
-  function handleChangeOut() {
-    const currentView = props.viewType.map((item) => {
-      item.settle = true;
-      return item;
-    });
-    props.method(currentView);
-  }
-
-  function RenderButton() {
+class DashboardHeader extends Component {
+  render() {
     return (
-      <div className="MidDash">
-        <div className="DashHeader">
-          <h3>Dashboard</h3>
-          
-          <Button class="btn float-right expense" name="Add an expense" onclickmeth={handleChangeExp} />
-          <Button class="btn float-right settle" name="Settle up" onclickmeth={handleChangeOut}/>
-     
+      <div className="Middle">
+        <div className="MidDash">
+          <div className="DashHeader">
+            <h3>Dashboard</h3>
+            <button className="btn float-right settle">Settle up</button>
+            <button className="btn float-right expense">Add an expense</button>
+            <DashboardMiddle />
+          </div>
         </div>
       </div>
-
-      
     );
   }
-  return (
-    <div className="dashboard-header">
-      <h3 className="h3-dashboard">{props.name}</h3>
-      <RenderButton />
-    </div>
-  );
 }
-
 export default DashboardHeader;

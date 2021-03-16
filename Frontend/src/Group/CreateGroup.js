@@ -12,10 +12,6 @@ class CreateGroup extends Component {
       email: localStorage.getItem("email_id"),
       groupname: "",
       userData: [],
-      options: [
-        { name: "Srigar", id: 1 },
-        { name: "Sam", id: 2 },
-      ],
       selected: [],
     };
     this.onChange = this.onChange.bind(this);
@@ -91,12 +87,11 @@ class CreateGroup extends Component {
     const groupData = {
       email: this.state.email,
       groupname: this.state.groupname,
-
       members: members,
     };
 
     console.log("groupData is :", groupData);
-    // axios.defaults.withCredentials = true;
+    axios.defaults.withCredentials = true;
     axios
       .post(`${backendServer}/creategroup/addgroup`, groupData)
       .then((response) => {
@@ -167,10 +162,9 @@ class CreateGroup extends Component {
                 <br></br>
                 <label>GROUP MEMBERS</label>
                 <Multiselect
-                  options={details} // Options to display in the dropdown
-                  //selectedValues={this.state.selectedValues} // Preselected value to persist in dropdown
+                  options={details}
+                  displayValue="value"
                   onSelect={this.onSelect}
-                  displayValue="email" // Property name to display in the dropdown options
                 />
 
                 <br></br>

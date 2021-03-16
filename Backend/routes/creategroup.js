@@ -4,12 +4,9 @@ const pool = require("../connection");
 
 router.post("/addgroup", (req, res) => {
   console.log("inside post create group backend");
-  let createdBy_email = req.body.email;
-  let groupname = req.body.groupname;
   let groupMem = req.body.members;
   let list = groupMem.join(", ");
 
-  console.log(createdBy_email, groupname, groupMem, list);
   let sql = `CALL insertGroupLoop('${req.body.groupname}','${req.body.email}','${list}')`;
   pool.query(sql, (err, result) => {
     if (err) {

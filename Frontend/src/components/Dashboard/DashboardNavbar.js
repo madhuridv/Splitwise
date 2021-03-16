@@ -40,8 +40,8 @@ class DashboardHeader extends Component {
             </Link>
           </Dropdown.Item>
           <Dropdown.Item>
-            <Link to="/expense" class="nav-link">
-              &nbsp;&nbsp; Group Expense
+            <Link to="/mygroup" class="nav-link">
+              &nbsp;&nbsp; My Group
             </Link>
           </Dropdown.Item>
 
