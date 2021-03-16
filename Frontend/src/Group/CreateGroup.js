@@ -9,7 +9,7 @@ class CreateGroup extends Component {
     super(props);
 
     this.state = {
-      email: localStorage.getItem("email_id"),
+      user_id: localStorage.getItem("user_id"),
       groupname: "",
       userData: [],
       selected: [],
@@ -29,10 +29,11 @@ class CreateGroup extends Component {
     axios
       .get(`${backendServer}/creategroup/getUser`)
       .then((response) => {
-        console.log("data is", response.data);
+        console.log("response data is", response.data);
         this.setState({
           userData: this.state.userData.concat(response.data),
         });
+        console.log("userdata:", this.state.userData);
       })
       .catch((error) => {
         console.log("error:", error);
@@ -80,12 +81,12 @@ class CreateGroup extends Component {
     let members = [];
 
     for (var i = 0; i < this.state.selected.length; i++) {
-      members[i] = this.state.selected[i].email;
+      members[i] = this.state.selected[i].id;
     }
     console.log("members array:", members);
 
     const groupData = {
-      email: this.state.email,
+      user_id: this.state.user_id,
       groupname: this.state.groupname,
       members: members,
     };
@@ -163,7 +164,7 @@ class CreateGroup extends Component {
                 <label>GROUP MEMBERS</label>
                 <Multiselect
                   options={details}
-                  displayValue="value"
+                  displayValue="email"
                   onSelect={this.onSelect}
                 />
 

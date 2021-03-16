@@ -42,7 +42,11 @@ class UserSignup extends Component {
     console.log(this.props.user);
     // if (localStorage.getItem("user_id")) {
     //   redirectVar = <Redirect to="/dashboard" />; } else
-    if (this.props.user === "USER_ADDED" && this.state.signupFlag) {
+    // if (this.props.user === "USER_ADDED" && this.state.signupFlag) {
+    if (this.props.user.id && this.state.signupFlag) {
+      localStorage.setItem("email_id", this.props.user.email);
+      localStorage.setItem("user_id", this.props.user.id);
+      localStorage.setItem("name", this.props.user.username);
       console.log(localStorage.getItem("name"));
       console.log(localStorage.getItem("email_id"));
       console.log(localStorage.getItem("user_id"));
