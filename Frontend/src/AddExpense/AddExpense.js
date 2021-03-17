@@ -4,7 +4,7 @@ import { Button, Modal } from "react-bootstrap";
 import axios from "axios";
 import backendServer from "../webConfig";
 
-function AddExpense() {
+function AddExpense(props) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -23,8 +23,6 @@ function AddExpense() {
     });
   };
 
-  
-
   const onSubmitExpense = (e) => {
     e.preventDefault();
 
@@ -33,8 +31,8 @@ function AddExpense() {
     const expenseData = {
       description: Object.values(description)[0],
       amount: Object.values(amount)[0],
-      groupName: "firstgroup",
-      addedBy: localStorage.getItem("name"), //email
+      groupName: props.groupName,
+      addedBy: localStorage.getItem("email_id"), //email
     };
 
     console.log("data to post", expenseData);
