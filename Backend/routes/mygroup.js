@@ -2,10 +2,6 @@ const express = require("express");
 const router = express();
 const pool = require("../connection");
 
-
-
-
-
 //from mygroups page
 router.post("/getGroup", (req, res) => {
   console.log("inside getGroup backend");
@@ -54,6 +50,29 @@ router.post("/joingroup", (req, res) => {
     }
   });
 });
+router.post("/exitgroup", (req, res) => {
+  console.log("inside exitgroup backend");
+  const groupMember = req.body.groupMember;
+  console.log("groupMember", groupMember);
+  console.log("req.body : ", req.body);
+  let sql = `CALL leaveGroup('${req.body.groupName}','${groupMember}')`;
+  console.log(sql);
+  pool.query(sql, [groupMember], (err, result) => {
+    if (err) {
+      res.writeHead(500, {
+        "Content-Type": "text/plain",
+      });
+      res.end("Error in Data");
+    }
+    console.log("Query result is:", result);
+    if (result && result.length) {
+      res.writeHead(200, {
+        "Content-Type": "text/plain",
+      });
+      res.end(JSON.stringify(result));
+    }
+  });
+});
 
 //from show groups page
 router.post("/getmembers", (req, res) => {
@@ -79,7 +98,5 @@ router.post("/getmembers", (req, res) => {
     }
   });
 });
-
-
 
 module.exports = router;

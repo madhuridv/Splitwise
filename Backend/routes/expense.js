@@ -6,9 +6,9 @@ router.post("/getexpensedetails", (req, res) => {
   console.log("inside get expense");
   let groupName = req.body.groupNameFromProps;
   console.log(req.body.groupNameFromProps);
-  let sql = " select distinct expenseDescription,amount,groupName,u.username,DATE_FORMAT(e.createdAt,'%d-%b-%Y') as Date from splitwise.expense e join users u on u.id = e.addedBy where groupName=?"
+  let sql =
+    " select distinct expenseDescription,amount,groupName,u.username,DATE_FORMAT(e.createdAt,'%d-%b-%Y') as Date from splitwise.expense e join users u on u.id = e.addedBy where groupName=? order by e.createdAt desc";
 
- // let sql = "select distinct expenseDescription,amount,groupName,addedBy,DATE_FORMAT(createdAt,'%d-%b-%Y') as Date from splitwise.expense where groupName=? ";
   pool.query(sql, [groupName], (err, result) => {
     if (err) {
       res.writeHead(500, {

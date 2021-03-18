@@ -91,7 +91,11 @@ class DashboardMiddle extends Component {
                     <li>
                       <div className="inline">
                         <h5>To {value.groupName} group</h5>
-                        <span>you owe ${value.totalOwesAmount}</span>
+                        <span>
+                          <p style={{ color: "red" }}>
+                            you owe -${value.totalOwesAmount}
+                          </p>
+                        </span>
                       </div>
                     </li>
                   ))
@@ -144,6 +148,8 @@ class DashboardMiddle extends Component {
             </div>
           </div>
         </div>
+        
+        
       </div>
     );
   }

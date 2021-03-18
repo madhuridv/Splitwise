@@ -3,6 +3,7 @@ import "../../styles/dashboard.css";
 import DashboardMiddle from "./DashboardMiddle";
 import axios from "axios";
 import backendServer from "../../webConfig.js";
+import { Link } from "react-router-dom";
 
 class DashboardHeader extends Component {
   constructor(props) {
@@ -31,10 +32,19 @@ class DashboardHeader extends Component {
   };
   render() {
     return (
-      <div className="Middle">
+      <div className="">
         <div className="MidDash">
+          <div className="col-sm-2"></div>
           <div className="DashHeader">
             <h3>Dashboard</h3>
+            <Link
+              className="btn float-right"
+              style={{ marginRight: "10px" }}
+              to={`/recentactivity`}
+            >
+              Recent Activity
+            </Link>
+
             <button
               className="btn float-right settle"
               onClick={this.onSettleUp}
@@ -45,6 +55,7 @@ class DashboardHeader extends Component {
             <DashboardMiddle />
           </div>
         </div>
+        <div className="col-sm-2"></div>
       </div>
     );
   }

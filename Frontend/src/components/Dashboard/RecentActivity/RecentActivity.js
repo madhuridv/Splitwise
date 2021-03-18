@@ -1,24 +1,65 @@
-import React,{useEffect} from 'react'
-import RecentActivityDetails from './RecentActivityDetails'
+import React, { Component } from "react";
+import DashboardNavbar from "../DashboardNavbar";
+import axios from "axios";
+import backendServer from "../../../webConfig";
 
-function RecentActivity(props){
-    var i=0
-    useEffect(() => {
-        document.title = "Recent Activity"
-    }, [])
-    const expensesOwe = props.expenses.map(item=>{
-        if(props.userData === item.user_name)
-            if(item.created_at.length>0)
-                return <RecentActivityDetails key={i++} type="added" description={item.description} moneyState="You get back" amount={item.amount} time={item.created_at.substr(3,7)===new Date().toString().substr(3,7)?"Today":item.created_at.substr(3,7)}/>
-            // if(item.deleted_at.length>0){
-            //     return <RecentActivityDetails description={item.description} moneyState="You get back" amount={item.amount} time={item.deleted_at}/>
-            // }
-    })
-    return(
-        <div className="recent-activity-overflow">
-            {expensesOwe.length>0?expensesOwe.reverse():<p style={{textAlign:"center",marginTop:"50px"}}>No Recent Activity yet.</p>}
+class RecentActivity extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activity: [],
+    };
+  }
+  componentDidMount() {
+    document.title = "Recent Activiy";
+
+    axios.defaults.withCredentials = true;
+    axios
+      .post(`${backendServer}/dashboard/recent`)
+      .then((response) => {
+        console.log("data is", response.data);
+        this.setState({
+          activity: this.state.activity.concat(response.data),
+        });
+      })
+      .catch((error) => {
+        console.log("error occured while connecting to backend:", error);
+      });
+  }
+  render() {
+    let activityList = this.state.activity;
+    console.log(activityList);
+    return (
+      <div className="showGroup">
+        <DashboardNavbar />
+        <div className="">
+          <div className="row">
+            <div className="col-sm-2"></div>
+
+            <div className="col" id="dash-center">
+              <div className="container">
+                <div className="row  align-items-center">
+                  <div className="col">
+                    <h3>Recent Activities</h3>
+                    {activityList.map((act) => (
+                      <div className="list-group list-group-horizontal">
+                        <ul class="list-group">
+                          <li class="list-group-item">{act.userName} added {act.expenseDescription} to {act.groupName}</li>
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div></div>
+              </div>
+            </div>
+
+            <div className="col-sm-2"></div>
+          </div>
         </div>
-    )
+      </div>
+    );
+  }
 }
 
-export default RecentActivity
+export default RecentActivity;

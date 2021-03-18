@@ -76,4 +76,31 @@ router.post("/settleup", (req, res) => {
     }
   });
 });
+router.post("/recent", (req, res) => {
+  console.log("inside recent backend");
+
+  let sql =
+    "select distinct expenseDescription, groupName, amount, u.userName from expense e join users u on e.addedBy = u.id group by groupName order by e.createdAt desc";
+  console.log(sql);
+  pool.query(sql, (err, result) => {
+    if (err) {
+      res.writeHead(500, {
+        "Content-Type": "text/plain",
+      });
+      res.end("Error in Data");
+    }
+    console.log("select reult is", result);
+    if (result && result.length) {
+      res.writeHead(200, {
+        "Content-Type": "text/plain",
+      });
+      res.end(JSON.stringify(result));
+    } else {
+      res.writeHead(400, {
+        "Content-Type": "text/plain",
+      });
+      res.end();
+    }
+  });
+});
 module.exports = router;

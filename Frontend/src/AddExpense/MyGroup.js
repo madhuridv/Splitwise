@@ -55,9 +55,24 @@ export class MyGroup extends Component {
         console.log("error occured while connecting to backend:", error);
       });
   };
-  // static propTypes = {
-  //   prop: PropTypes,
-  // };
+
+  onLeaveClick = (gName) => {
+    console.log(gName);
+    const exitData = { groupName: gName, groupMember: this.state.user_id };
+    console.log(exitData);
+    axios.defaults.withCredentials = true;
+    axios
+      .post(`${backendServer}/mygroup/exitgroup`, exitData)
+      .then((response) => {
+        console.log("Response after Axios call", response);
+        if (response.status == 200 && response.data === "GROUP_DELETED") {
+          alert("successfully!");
+        }
+      })
+      .catch((error) => {
+        console.log("error occured while connecting to backend:", error);
+      });
+  };
 
   render() {
     let groupList = this.state.groups;
@@ -111,7 +126,7 @@ export class MyGroup extends Component {
                               className="btn btn-outline-success my-2 my-sm-0"
                               onClick={() => this.onJoinClick(group.groupName)}
                             >
-                              Join Group
+                              Accept
                             </button>
                           </span>
                         </div>
@@ -127,6 +142,14 @@ export class MyGroup extends Component {
                           >
                             {group.groupName}
                           </Link>
+                          <span>
+                            <button
+                              className="btn btn-outline-danger my-2 my-sm-0"
+                              onClick={() => this.onLeaveClick(group.groupName)}
+                            >
+                              Quit
+                            </button>
+                          </span>
                         </div>
                       )
                     )}

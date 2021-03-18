@@ -60,7 +60,7 @@ class ShowGroup extends Component {
     let expense = obj.sort((a, b) => a.Date - b.Date);
     //console.log("expense is :", expense);
     let gName = this.state.groupName;
-    console.log("groupdata to send to addexpense", this.state);
+    console.log("groupdata to sent to addexpense", this.state);
     return (
       <div className="showGroup">
         <DashboardNavbar />
