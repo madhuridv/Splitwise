@@ -4,6 +4,7 @@ import DashboardNavbar from "../components/Dashboard/DashboardNavbar";
 import AddExpense from "./AddExpense";
 import axios from "axios";
 import backendServer from "../webConfig";
+import expensePic from "../images/expense.png";
 
 //to show list of groups
 class ShowGroup extends Component {
@@ -11,7 +12,8 @@ class ShowGroup extends Component {
     super(props);
     this.state = {
       groupName: "",
-      userEmail: localStorage.getItem("email"),
+      groupMembers: [],
+      userEmail: localStorage.getItem("email_id"),
       recentExpense: [],
     };
   }
@@ -22,8 +24,23 @@ class ShowGroup extends Component {
       groupName: groupNameFromProps,
     });
     console.log(groupNameFromProps);
+
+    const groupData = { gName: groupNameFromProps };
+    console.log("groupData: ", groupData);
+    axios.defaults.withCredentials = true;
     axios
-      .post(`${backendServer}/mygroup/getexpensedetails`, {
+      .post(`${backendServer}/mygroup/getmembers`, groupData)
+      .then((response) => {
+        console.log("response from Axios query", response.data);
+        this.setState({
+          groupMembers: this.state.groupMembers.concat(response.data),
+        });
+      })
+      .catch((error) => {
+        console.log("error occured while connecting to backend:", error);
+      });
+    axios
+      .post(`${backendServer}/expense/getexpensedetails`, {
         groupNameFromProps,
       })
       .then((response) => {
@@ -33,14 +50,17 @@ class ShowGroup extends Component {
         });
       })
       .catch((error) => {
-        console.log("error occured while connecting to backend:", error);
+        console.log("error occured in axios post", error);
       });
   }
 
   render() {
-    let expense = this.state.recentExpense;
-    console.log("expense", expense);
+    //let expense = this.state.recentExpense;
+    let obj = [...this.state.recentExpense];
+    let expense = obj.sort((a, b) => a.Date - b.Date);
+    //console.log("expense is :", expense);
     let gName = this.state.groupName;
+    console.log("groupdata to send to addexpense", this.state);
     return (
       <div className="showGroup">
         <DashboardNavbar />
@@ -54,23 +74,30 @@ class ShowGroup extends Component {
                   <div className="col">
                     <h3>{gName}</h3>
                   </div>
-                  <AddExpense groupName={this.state.groupName} />
+                  <AddExpense groupData={this.state} />
                 </div>
                 <div>
                   <div className="">
-                    <h2>Recent Activity</h2>
+                    <h5>Recent Activity</h5>
                     {expense.map((exp) => (
-                      <div class="list-group list-group-flush">
-                     
-                      <div class="list-group list-group-flush">
-                        <div class="d-flex w-100 justify-content-between">
-                          <h5 class="mb-1">{exp.expenseDescription}</h5>
-                          <small class="text-muted">{exp.Date}</small>
+                      <div className="list-group list-group-flush">
+                        <div className="d-flex w-100 justify-content-between">
+                          <h5 className="mb-1"></h5>
+                          <small className="text-muted">{exp.Date}</small>
                         </div>
-                        <p class="mb-1">{exp.groupName}</p>
-                        <small class="text-muted">{exp.addedBy}.</small>
+                        <p className="mb-1">
+                          {" "}
+                          <img
+                            src={expensePic}
+                            style={{ height: "fit-content" }}
+                            alt="Expense"
+                          />
+                          {exp.expenseDescription}
+                        </p>
+                        <small className="text-muted">
+                          {exp.username} paid ${exp.amount}
+                        </small>
                       </div>
-                    </div>
                     ))}
                   </div>
                 </div>

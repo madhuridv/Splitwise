@@ -7,6 +7,7 @@ const images = require("./routes/images");
 const uploads = require("./routes/uploads");
 const creategroup = require("./routes/creategroup");
 const mygroup = require("./routes/mygroup");
+const expense = require("./routes/expense");
 
 app.use("/login", login);
 app.use("/signup", signup);
@@ -15,6 +16,7 @@ app.use("/images", images);
 app.use("/uploads", uploads);
 app.use("/creategroup", creategroup);
 app.use("/mygroup",mygroup);
+app.use("/expense",expense);
 
 const port = process.env.PORT || 3001;
 var server = app.listen(port, () => {

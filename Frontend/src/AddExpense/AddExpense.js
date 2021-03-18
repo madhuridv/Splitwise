@@ -27,19 +27,27 @@ function AddExpense(props) {
     e.preventDefault();
 
     console.log(Object.values(description));
+    // console.log(props.groupData.groupName)
 
     const expenseData = {
       description: Object.values(description)[0],
       amount: Object.values(amount)[0],
-      groupName: props.groupName,
-      addedBy: localStorage.getItem("email_id"), //email
+      groupName: props.groupData.groupName,
+      groupMembers: props.groupData.groupMembers,
+      addedBy: localStorage.getItem("user_id"), //email
     };
+    // const expenseData = {
+    //   description: Object.values(description)[0],
+    //   amount: Object.values(amount)[0],
+    //   groupName: props.groupName,
+    //   addedBy: localStorage.getItem("email_id"), //email
+    // };
 
-    console.log("data to post", expenseData);
+    console.log("expense data to post", expenseData);
 
     axios.defaults.withCredentials = true;
     axios
-      .post(`${backendServer}/mygroup/expense`, expenseData)
+      .post(`${backendServer}/expense/expense`, expenseData)
       .then((response) => {
         console.log("response after post", response);
         if (response.status == 200 && response.data === "EXPENSE_ADDED") {
@@ -50,6 +58,7 @@ function AddExpense(props) {
         alert("Failed to add expense");
         console.log("error:", error);
       });
+    //handleClose();
   };
 
   return (
