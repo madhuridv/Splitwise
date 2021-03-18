@@ -26,9 +26,12 @@ const useruploads = multer({
 
 router.post("/:user_id", (req, res) => {
   console.log("inside upload");
+  
+ 
   useruploads(req, res, function (err) {
     if (!err) {
       let imageSql = `UPDATE splitwise.users SET user_image = '${req.file.filename}' WHERE id = ${req.params.user_id}`;
+      console.log(req.file.filename);
       pool.query(imageSql, (err, result) => {
         if (err) {
           res.writeHead(500, {
@@ -43,7 +46,7 @@ router.post("/:user_id", (req, res) => {
       res.end(req.file.filename);
     } else {
       console.log("Error!" +  err);
-    }
+     }
   });
 });
 

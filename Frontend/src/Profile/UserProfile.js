@@ -1,15 +1,8 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { Component } from "react";
 //import { Link } from "react-router-dom";
-import {
-  InputGroup,
-  Col,
-  FormControl,
-  Form,
-  Button,
-  DropdownButton,
-  Dropdown,
-} from "react-bootstrap";
+import { Button } from "react-bootstrap";
+import Image from "react-bootstrap/Image";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import axios from "axios";
@@ -79,6 +72,7 @@ class UserProfile extends Component {
         "content-type": "multipart/form-data",
       },
     };
+
     axios
       .post(
         `${backendServer}/uploads/${this.state.user_id}`,
@@ -114,13 +108,15 @@ class UserProfile extends Component {
     }
     return (
       <div className="container signup">
-        <div className="">
-          <img
-            className=""
+
+        <div className="col">
+          
+         <img
+            className="img-fluid"
             src={imageSrc}
             alt="profile picture"
-            // style={{ height: "fit-content" }}
-          />
+           style={{ height: 300, width :300 }}
+          /> 
 
           <form onSubmit={this.onUpload}>
             <div class="form-group">

@@ -59,7 +59,7 @@ class CreateGroup extends Component {
     };
     axios
       .post(
-        `${backendServer}/uploads/${this.state.user_id}`,
+        `${backendServer}/uploads/${this.state.user_image}`,
         formData,
         uploadConfig
       )
@@ -123,8 +123,13 @@ class CreateGroup extends Component {
     }
     return (
       <div className="container signup">
-        <div className="">
-          <img className="" src={imageSrc} alt="profile picture" />
+        <div className="col">
+          <img
+            className="img-fluid"
+            src={imageSrc}
+            alt="profile picture"
+            style={{ height: 300, width: 300 }}
+          />
 
           <form onSubmit={this.onUpload}>
             <div className="form-group">
@@ -142,43 +147,45 @@ class CreateGroup extends Component {
             </Button>
           </form>
         </div>
-        <div className="signup-form">
-          <form onSubmit={this.onSubmit}>
-            <div className="row">
-              <div className="col">
-                <div className="form-group">
-                  <label htmlFor="name">START A NEW GROUP</label>
+        <div className="col">
+          <div className="signup-form">
+            <form onSubmit={this.onSubmit}>
+              <div className="row">
+                <div className="col">
+                  <div className="form-group">
+                    <label htmlFor="name">START A NEW GROUP</label>
+                    <br></br>
+                    <label htmlFor="name">My group shall be called...</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="groupname"
+                      onChange={this.onChange}
+                      value={this.state.groupname}
+                      placeholder="Group Name"
+                      required
+                    />
+                  </div>
                   <br></br>
-                  <label htmlFor="name">My group shall be called...</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    name="groupname"
-                    onChange={this.onChange}
-                    value={this.state.groupname}
-                    placeholder="Group Name"
-                    required
+                  <label>GROUP MEMBERS</label>
+                  <Multiselect
+                    options={details}
+                    displayValue="email"
+                    onSelect={this.onSelect}
                   />
-                </div>
-                <br></br>
-                <label>GROUP MEMBERS</label>
-                <Multiselect
-                  options={details}
-                  displayValue="email"
-                  onSelect={this.onSelect}
-                />
 
-                <br></br>
-
-                <div className="form-group">
                   <br></br>
-                  <button type="submit" className="btn btn-primary">
-                    Save
-                  </button>
+
+                  <div className="form-group">
+                    <br></br>
+                    <button type="submit" className="btn btn-primary">
+                      Save
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     );

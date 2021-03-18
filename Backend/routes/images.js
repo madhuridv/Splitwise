@@ -11,16 +11,15 @@ router.get("/:user_image", (req, res) => {
 
   console.log(image);
   let isPresent = fs.existsSync(image);
-  console.log(isPresent);
+  console.log("isPresent", isPresent);
   if (fs.existsSync(image)) {
     res.sendFile(image);
   } else {
     res.sendFile(
-      path.join(__dirname, "..") + "/public/userImage/profile_icon.png"
+      path.join(__dirname, "..") + "/public/userImage/group_icon.png"
     );
   }
 });
-
 
 router.get("/group/:user_image", (req, res) => {
   console.log("inside image");
@@ -34,7 +33,7 @@ router.get("/group/:user_image", (req, res) => {
     res.sendFile(image);
   } else {
     res.sendFile(
-      path.join(__dirname, "..") + "/public/userImage/profile_icon.png"
+      path.join(__dirname, "..") + "/public/userImage/group_icon.png"
     );
   }
 });
