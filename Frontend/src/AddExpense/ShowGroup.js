@@ -81,17 +81,20 @@ class ShowGroup extends Component {
                     <h5>Recent Activity</h5>
                     {expense.map((exp) => (
                       <div className="list-group list-group-flush">
+                        
                         <div className="d-flex w-100 justify-content-between">
                           <h5 className="mb-1"></h5>
                           <small className="text-muted">{exp.Date}</small>
+                          
                         </div>
+                        
                         <p className="mb-1">
                           {" "}
-                          <img
+                          {/* <img
                             src={expensePic}
                             style={{ height: "fit-content" }}
                             alt="Expense"
-                          />
+                          /> */}
                           {exp.expenseDescription}
                         </p>
                         <small className="text-muted">
