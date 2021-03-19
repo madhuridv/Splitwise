@@ -52,20 +52,20 @@ class DashboardMiddle extends Component {
       <div className="">
         <div className="MidDash">
           <div className="DashHeader">
-            <div className="total">
-              <div className="fitting">
+            {/* <div className="total">
+              <div className="">
                 <label htmlFor="">total balance</label>
                 <p className="green">$ 0.00</p>
               </div>
-              <div className="fitting">
+              <div className="">
                 <label htmlFor="">you owe</label>
                 <p style={{ color: "red" }}>$ 0.000</p>
               </div>
-              <div className="fitting">
-                <label htmlFor="">you are owed</label>
+              <div className="">
+                  <label htmlFor="">you are owed</label>
                 <p className="green">$ 0.00</p>
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className="totalCollection">
@@ -93,7 +93,7 @@ class DashboardMiddle extends Component {
                         <h5>To {value.groupName} group</h5>
                         <span>
                           <p style={{ color: "red" }}>
-                            you owe -${value.totalOwesAmount}
+                            you owe ${value.totalOwesAmount}
                           </p>
                         </span>
                       </div>
@@ -148,8 +148,6 @@ class DashboardMiddle extends Component {
             </div>
           </div>
         </div>
-        
-        
       </div>
     );
   }

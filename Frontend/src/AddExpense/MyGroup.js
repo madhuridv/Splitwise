@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import DashboardNavbar from "../components/Dashboard/DashboardNavbar";
 import "../styles/dashboard.css";
-
 import { connect } from "react-redux";
 import "../styles/signup.css";
 import backendServer from "../webConfig";
@@ -12,6 +11,7 @@ export class MyGroup extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      search: "",
       groups: [],
       email: localStorage.getItem("email_id"),
       user_id: localStorage.getItem("user_id"),
@@ -35,6 +35,10 @@ export class MyGroup extends Component {
         console.log("error occured while connecting to backend:", error);
       });
   }
+
+  onchange = (e) => {
+    this.setState({ search: e.target.value });
+  };
 
   //to change the isAccepted status true
   onJoinClick = (gName) => {
@@ -66,21 +70,34 @@ export class MyGroup extends Component {
       .then((response) => {
         console.log("Response after Axios call", response);
         if (response.status == 200 && response.data === "GROUP_DELETED") {
-          alert("successfully!");
+          alert("Sad to see you leave this group!");
+        } else if (response.status == 401 && response.data === "CLEAR_DUES") {
+          alert("Please clear your dues before leaving the group!");
         }
       })
       .catch((error) => {
         console.log("error occured while connecting to backend:", error);
+        alert("Please cleaer your dues before leaving the group!");
       });
   };
 
   render() {
+    const { search } = this.state;
+    console.log("search", search);
     let groupList = this.state.groups;
+    console.log("groupList", groupList);
+
+    const searchList = groupList.filter((group) => {
+      return group.groupName.toLowerCase().indexOf(search.toLowerCase()) !== -1;
+    });
+
+    console.log("searchList", searchList);
+
     return (
-      <div lassName="">
+      <div className="">
         <DashboardNavbar />
-        <div c>
-          <div className="MidDash">
+        <div className="showGroup">
+          <div className="">
             <div className="row">
               <div className="col-sm-2"></div>
               <div className="col">
@@ -96,18 +113,16 @@ export class MyGroup extends Component {
                           type="search"
                           placeholder="Search"
                           aria-label="Search"
+                          onChange={this.onchange}
                         />
-                        <button
-                          className="btn btn-outline-success my-2 my-sm-0"
-                          type="submit"
-                        >
-                          Search
-                        </button>
                       </form>
                     </div>
                   </div>
-                  <div>
-                    {groupList.map((group) =>
+                  <br></br>
+                  
+                  
+                  <div className="">
+                    {searchList.map((group) =>
                       group.isAccepted === "False" ? (
                         <div
                           className="list-group list-group-horizontal"

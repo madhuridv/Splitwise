@@ -65,11 +65,23 @@ router.post("/exitgroup", (req, res) => {
       res.end("Error in Data");
     }
     console.log("Query result is:", result);
-    if (result && result.length) {
+    if (result && result.length > 0 && result[0][0].status === "GROUP_DELETED") {
+     
+      
       res.writeHead(200, {
         "Content-Type": "text/plain",
       });
-      res.end(JSON.stringify(result));
+      res.end(result[0][0].status);
+      
+    } else if (
+      result &&
+      result.length > 0 &&
+      result[0][0].status === "CLEAR_DUES"
+    ) {
+      res.writeHead(401, {
+        "Content-Type": "text/plain",
+      });
+      res.end(result[0][0].status);
     }
   });
 });

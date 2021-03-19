@@ -58,7 +58,7 @@ function AddExpense(props) {
         alert("Failed to add expense");
         console.log("error:", error);
       });
-    //handleClose();
+    handleClose();
   };
 
   return (

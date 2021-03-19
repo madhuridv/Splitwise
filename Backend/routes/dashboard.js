@@ -54,9 +54,8 @@ router.post("/settleup", (req, res) => {
   console.log("inside settle up backend");
   const user_id = req.body.user_id;
   console.log(user_id);
-  let sql =
-    "DELETE FROM splitwise.balance WHERE lentTo=? ORDER BY createdAt DESC LIMIT 1;";
-
+  let sql = "update splitwise.balance set amtToPay = 0 where lentTo = ?";
+  console.log(sql);
   pool.query(sql, [user_id], (err, result) => {
     if (err) {
       res.writeHead(500, {
@@ -80,7 +79,7 @@ router.post("/recent", (req, res) => {
   console.log("inside recent backend");
 
   let sql =
-    "select distinct expenseDescription, groupName, amount, u.userName from expense e join users u on e.addedBy = u.id group by groupName order by e.createdAt desc";
+    "select distinct expenseDescription, groupName, amount, u.userName,e.createdAt as Date from expense e join users u on e.addedBy = u.id order by e.createdAt desc";
   console.log(sql);
   pool.query(sql, (err, result) => {
     if (err) {
@@ -90,6 +89,35 @@ router.post("/recent", (req, res) => {
       res.end("Error in Data");
     }
     console.log("select reult is", result);
+    if (result && result.length) {
+      res.writeHead(200, {
+        "Content-Type": "text/plain",
+      });
+      res.end(JSON.stringify(result));
+    } else {
+      res.writeHead(400, {
+        "Content-Type": "text/plain",
+      });
+      res.end();
+    }
+  });
+});
+
+router.post("/recentsettle", (req, res) => {
+  console.log("inside recent settle backend");
+  const user_id = req.body.user_id;
+  console.log(user_id);
+  let sql =
+    "select distinct b.groupName,u.username,b.createdAt as Date from splitwise.balance b join users u on b.lentTo = u.id where b.amtToPay = 0 group by u.username order by b.createdAt desc";
+  console.log(sql);
+  pool.query(sql, [user_id], (err, result) => {
+    if (err) {
+      res.writeHead(500, {
+        "Content-Type": "text/plain",
+      });
+      res.end("Error in Data");
+    }
+    console.log("select result is", result);
     if (result && result.length) {
       res.writeHead(200, {
         "Content-Type": "text/plain",

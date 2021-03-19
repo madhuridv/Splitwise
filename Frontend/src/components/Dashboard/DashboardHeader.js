@@ -33,7 +33,7 @@ class DashboardHeader extends Component {
   render() {
     return (
       <div className="">
-        <div className="MidDash">
+        <div className="showGroup">
           <div className="col-sm-2"></div>
           <div className="DashHeader">
             <h3>Dashboard</h3>
