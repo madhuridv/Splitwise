@@ -1,5 +1,5 @@
 import { React, Component } from "react";
-import { Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { Landing } from "./components/landing";
 import Login from "./components/Login";
 import UserSignup from "./components/UserSignup";
@@ -18,17 +18,19 @@ class App extends Component {
     return (
       <Provider store={store}>
         <div>
-          <Switch>
-            <Route exact path="/" component={Landing}></Route>
-            <Route exact path="/login" component={Login}></Route>
-            <Route path="/signup" component={UserSignup} />
-            <Route exact path="/dashboard" component={Dashboard}></Route>
-            <Route path="/profile" component={Profile} />
-            <Route path="/creategroup" component={Group} />
-            <Route path="/mygroup" component={MyGroup} />
-            <Route path="/groups/:groupName" component={ShowGroups} />
-            <Route path="/recentactivity" component={RecentActivity} />
-          </Switch>
+          <BrowserRouter>
+            <Switch>
+              <Route exact path="/" component={Landing}></Route>
+              <Route exact path="/login" component={Login}></Route>
+              <Route path="/signup" component={UserSignup} />
+              <Route exact path="/dashboard" component={Dashboard}></Route>
+              <Route path="/profile" component={Profile} />
+              <Route path="/creategroup" component={Group} />
+              <Route path="/mygroup" component={MyGroup} />
+              <Route path="/groups/:groupName" component={ShowGroups} />
+              <Route path="/recentactivity" component={RecentActivity} />
+            </Switch>
+          </BrowserRouter>
         </div>
       </Provider>
     );

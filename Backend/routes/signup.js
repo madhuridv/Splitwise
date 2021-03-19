@@ -4,8 +4,8 @@ const bcrypt = require("bcryptjs");
 const pool = require("../connection");
 
 router.post("/", (req, res) => {
-  console.log("inside signup");
-  console.log(req.body);
+  //console.log("inside signup");
+  //console.log(req.body);
   const hashedPassword = bcrypt.hashSync(req.body.password, 10);
   let sql = `CALL insertUser('${req.body.username}', '${req.body.email}', '${hashedPassword}');`;
 
