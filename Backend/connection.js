@@ -1,5 +1,6 @@
 const mysql = require("mysql");
 const myPort = 3305;
+
 const pool = mysql.createPool({
   connectionLimit: 100,
   host: "rds-mysql-madhuridv.clc2w9lpegfh.us-west-2.rds.amazonaws.com",

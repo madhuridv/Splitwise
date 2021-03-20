@@ -64,17 +64,21 @@ describe("User Signup Test", () => {
       });
   });
 
-    it("Successful User Signup", () => {
-      agent
-        .post("/signup")
-        .send({ name: "manish", email_id: "manish@gmail.com" ,password:"manish"})
-        .then(function (res) {
-          expect(res.status).to.equal(200);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    });
+  it("Successful User Signup", () => {
+    agent
+      .post("/signup")
+      .send({
+        name: "manish",
+        email_id: "manish@gmail.com",
+        password: "manish",
+      })
+      .then(function (res) {
+        expect(res.status).to.equal(200);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
 });
 
 describe("User Profile Test", () => {
@@ -88,17 +92,31 @@ describe("User Profile Test", () => {
         console.log(error);
       });
   });
-  describe('Menu Sections Test', () => {
-
-    it('Fetch Menu Section Name for given section id',function () {
-        agent.get("/menu/sectionitem/46")
-            .then(function (res) {
-                expect(JSON.parse(res.text).menu_section_name).to.equal("Lunch");
-            })
-            .catch(error => {
-                console.log(error);
-            });
+  describe("Create group Test", () => {
+    it("Fetch all registered users for grouop creation", function () {
+      agent
+        .get("/creategroup/getUser")
+        .then(function (res) {
+          expect(res.status).to.equal(200);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     });
-
-});
+  });
+  describe("Dashboard Test", () => {
+    it("Get Details of balance data", () => {
+      agent
+        .post("/owedata")
+        .send({
+          user_id: "5",
+        })
+        .then(function (res) {
+          expect(res.status).to.equal(404);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
+  });
 });

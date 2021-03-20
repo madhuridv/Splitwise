@@ -31,7 +31,7 @@ router.post("/addgroup", (req, res) => {
 });
 
 router.get("/getUser", (req, res) => {
-  console.log("inside get groups");
+ // console.log("inside get groups");
   let sql = `select distinct id,username,email from splitwise.users`;
   pool.query(sql, (err, result) => {
     if (err) {
